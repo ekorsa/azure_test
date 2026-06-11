@@ -1,0 +1,9 @@
+service:
+  type: ClusterIP
+
+ingress:
+  className: nginx
+
+  hosts:
+    app: fastapi.azure-test.local
+    grafana: grafana.azure-test.local

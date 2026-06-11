@@ -1,0 +1,38 @@
+
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "my-devops-app.fullname" . }}
+  labels:
+    {{- include "my-devops-app.labels" . | nindent 4 }}
+  annotations:
+    {{- toYaml .Values.ingress.annotations | nindent 4 }}
+spec:
+  ingressClassName: {{ .Values.ingress.className }}
+  rules:
+    # FastAPI
+    - host: {{ .Values.ingress.hosts.app }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "my-devops-app.fullname" . }}
+                port:
+                  name: http
+
+    # Grafana
+    - host: {{ .Values.ingress.hosts.grafana }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "my-devops-app.fullname" . }}
+                port:
+                  name: grafana
+{{- end }}
+

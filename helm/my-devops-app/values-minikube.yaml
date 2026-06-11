@@ -1,0 +1,10 @@
+service:
+  type: NodePort
+
+replicaCount: 1
+
+ingress:
+  hosts:
+    app: my-app.local
+    grafana: grafana.local
+
